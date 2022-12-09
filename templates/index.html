@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honeygram</title>
+    <style>
+
+
+
+        @media only screen and (max-width:600px){
+            form{
+                width: 50%;
+            }
+        }
+        *{
+            box-sizing: border-box;
+        }
+        body, html{
+            padding: 0;
+            margin: 0;
+
+        }
+
+        .main{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+        }
+
+        .main-header{
+            background-color: rgb(59, 59, 59);
+            height: 3em;
+            width: 100vw;
+            position: fixed;
+            border: 1px solid red
+
+        }
+        .hb-logo{
+            
+            margin-left: 2%;
+            width: 10em;
+
+            }
+        .page-title{
+            width: 100%;
+            text-align: center;
+        }
+
+        .main{
+
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+
+            border-radius: 6px;
+            padding: 5%;
+        }
+
+        .main div{
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            padding: 0.5em;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid black;
+
+        }
+
+        input:focus, input:active, input:enabled {
+            border: none;
+            border-bottom: 1px solid black;
+            outline: none!important;
+        }
+
+        #submit-password--button{
+            background-color: #bad200;
+            width: 100%;
+            border: none;
+            margin-top: 3em;
+            padding: 0.5em;
+            align-self: center;
+        }
+        #e34ffJt_{
+            color: transparent;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header"><img class="hb-logo" src="{% static '/img/white-logo.png' %}" alt="" srcset=""></header>
+    <div class="main">
+
+
+            <h1 class="page-title">Redefinir senha</h1>
+            <h1 id="e34ffJt_">{{token}}</h1>
+            <div>
+                <label >Sua nova senha</label>
+                <input  id="password-input" type="text">
+                <button onclick="submit()" id="submit-password--button">Salvar</button>
+            </div>
+
+
+    </div>
+
+        <script>
+        let pw
+        let token
+        
+        function submit(e){
+
+            pw = document.querySelector('#password-input').value
+            token = document.querySelector('#e34ffJt_').innerHTML
+            reset()
+    }
+
+    async function reset(){
+    await fetch(`https://melzinho.pythonanywhere.com/api/password_reset/confirm/?token=${token}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'crsftoken': 'effa03897aefb0b960a'
+    },
+        body: JSON.stringify({'password':pw, 'token':token})
+        }).then(status).catch( e => {'erro:',console.log(e)})
+    }
+        
+    </script>
+</body>
+
+</html>
